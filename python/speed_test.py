@@ -9,9 +9,9 @@ start = perf_counter()
 for company in company_list_sample:
   result_list.append(company.lower())
 print(perf_counter()-start)
-# 17.13 s
+# 12.17 s
 
 start = perf_counter()
 result_list = map(str.lower, company_list_sample)
 print(perf_counter()-start)
-# 0.97 s
+# 0.87 s
