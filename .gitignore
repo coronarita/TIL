@@ -1,2 +1,3 @@
 .vscode
-test2.exe
+*.exe
+*.o
