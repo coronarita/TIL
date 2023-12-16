@@ -8,6 +8,9 @@ int main()
         v.push_back(i);
     v.push_back(7);
 
+    // 2 3 4 5 7
+    // 0 1 2 3 4
+
     cout << upper_bound(v.begin(), v.end(), 6) - v.begin() << endl;
 
     cout << lower_bound(v.begin(), v.end(), 6) - v.begin() << endl;
