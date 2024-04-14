@@ -14,3 +14,16 @@ class Todo(BaseModel):
 			]
 		}
     }
+    
+    
+class TodoItem(BaseModel):
+	item: str
+	
+	model_config = { # pydantic v2의 사용례
+		"json_schema_extra": {
+			"example": [
+			{"item": "Read the next chapter of the book."
+			}
+			]
+		}
+    }
