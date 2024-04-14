@@ -1,5 +1,5 @@
 # api.py에서 추가해줘야 함
-from fastapi import APIRouter
+from fastapi import APIRouter, Path
 from model import Todo
 
 todo_router = APIRouter()
@@ -21,7 +21,8 @@ async def retrieve_todos() -> dict:
     
 @todo_router.get("/todo/{todo_id}") # 경로 매개변수
 # todo_id에 해당하는 작업 추출하는 라우트
-async def get_single_todo(todo_id: int) -> dict:
+async def get_single_todo(todo_id: int = Path(..., title="The ID of the todo to retrieve.")
+                          ) -> dict:
 	for todo in todo_list:
 		if todo.id == todo_id:
 			return {
