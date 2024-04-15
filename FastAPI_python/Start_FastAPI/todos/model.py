@@ -7,12 +7,11 @@ class Todo(BaseModel):
      
     model_config = {
 		"json_schema_extra": {
-			"example": [
+			"example": 
 				{
 				"id": 1,
 				"item": "Example Schema!"
 				}
-			]
 		}
     }
     
@@ -22,10 +21,9 @@ class TodoItem(BaseModel):
 	
 	model_config = { # pydantic v2의 사용례
 		"json_schema_extra": {
-			"example": [
+			"example": 
 			{"item": "Read the next chapter of the book."
 			}
-			]
 		}
     }
  
@@ -35,7 +33,7 @@ class TodoItems(BaseModel):
   
 	model_config = { # pydantic v2의 사용례
 		"json_schema_extra": {
-			"example": [
+			"example":
 			{	"todos" : [
 					{
 					"item": "Example schema 1!"
@@ -45,6 +43,5 @@ class TodoItems(BaseModel):
 					}
                 ]
 			}
-			]
 		}
     }
