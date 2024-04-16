@@ -1,7 +1,11 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from models.users import User
+from models.events import Event
+
 
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
@@ -9,11 +13,10 @@ class Settings(BaseSettings):
     async def initialize_database(self):
         client = AsyncIOMotorClient(self.DATABASE_URL)
         await init_beanie(database=client.get_default_database(),
-            document_models=[])
+            document_models=[Event, User])
         
-    # model_config = {
-    #     env_file = ".env"
-    # }
     
-    class Config:
-        env_file = ".env"
+    # Deprecated
+    # class Config:
+        # env_file = ".env"
+    model_config = SettingsConfigDict(env_file = ".env")
