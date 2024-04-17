@@ -48,6 +48,8 @@ class Database:
         await doc.delete()
         return True
     
+    # async def clear(self) -> None :
+        
     
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
