@@ -1,2 +1,5 @@
-venv/
+.vscode
+planner.db
+store
 __pycache__
+venv
