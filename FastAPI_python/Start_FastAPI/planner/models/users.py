@@ -13,8 +13,9 @@ class User(Document):
     class Settings:
         name = "users"
     
-    model_config = {
-        "json_schema_extra": {
+    # deprecated
+    class Config:
+        schema_extra = {
             "example":
                 {
                  "email": "fastapi@packt.com",
@@ -22,7 +23,17 @@ class User(Document):
                  "events": [],
                 }
         }
-    }
+    
+    # model_config = {
+    #     "json_schema_extra": {
+    #         "example":
+    #             {
+    #              "email": "fastapi@packt.com",
+    #              "password": "strong!!!",
+    #              "events": [],
+    #             }
+    #     }
+    # }
     
     
 class UserSignIn(BaseModel):
