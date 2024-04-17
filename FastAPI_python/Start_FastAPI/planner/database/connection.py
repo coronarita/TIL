@@ -1,8 +1,8 @@
 from beanie import init_beanie, PydanticObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional, Any, List
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import BaseModel
+# from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import BaseModel, BaseSettings
 
 from models.users import User
 from models.events import Event
@@ -27,8 +27,8 @@ class Database:
     
     async def update(self, id: PydanticObjectId, body: BaseModel) -> Any:
         doc_id = id
-        # des_body = body.dict() # deprecated
-        des_body = body.model_dump()
+        des_body = body.dict() # deprecated
+        # des_body = body.model_dump()
         des_body = {k:v for k,v in des_body.items() if v is not None}
         
         update_query = {"$set": {
@@ -61,6 +61,6 @@ class Settings(BaseSettings):
         
     
     # Deprecated
-    # class Config:
-        # env_file = ".env"
-    model_config = SettingsConfigDict(env_file = ".env")
+    class Config:
+        env_file = ".env"
+    # model_config = SettingsConfigDict(env_file = ".env")
