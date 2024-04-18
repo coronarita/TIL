@@ -1,7 +1,10 @@
 from auth.hash_password import HashPassword
 
-from fastapi import APIRouter, HTTPException, status
-from models.users import User, UserSignIn
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm # 인증 정보 추출을 위해 로그인 라우트에 주입
+from auth.jwt_handler import create_access_token
+
+from models.users import User, TokenResponse
 from database.connection import Database
 
 user_router = APIRouter(
@@ -25,19 +28,27 @@ async def sign_new_user(user: User) -> dict:
         "message": "User created successfully."
     }
     
-@user_router.post("/signin")
-async def sign_user_in(user: UserSignIn) -> dict:
-    user_exist = await User.find_one(User.email == user.email)
+@user_router.post("/signin", response_model=TokenResponse) # 응답 모델 지정
+# OAuth2PasswordRequestForm을 주입하여 함수가 OAuth2사양을 업격하게 따르도록 한다.
+async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> dict: 
+    user_exist = await User.find_one(User.email == user.username)
     if not user_exist:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User with email does not exist"
-        )
-        
-    if user_exist.password == user.password:
+        )    
+    # if user_exist.password == user.password:
+    #     return {
+    #     "message": "User signed in successfully."
+    #     }
+    
+    if hash_password.verify_hash(user.password, user_exist.password):
+        access_token = create_access_token(user_exist.email)
         return {
-        "message": "User signed in successfully."
+            "access_token": access_token,
+            "token_type": "Bearer"
         }
+    
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Invalid details passed"
