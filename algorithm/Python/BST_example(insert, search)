@@ -1,0 +1,66 @@
+lst = [5, 3, 8, 4, 2, 1, 7, 10]
+search_lst = [1, 2, 5, 6]
+
+
+# 노드 정의
+class Node:
+    def __init__(self, key):
+        self.val = key
+        self.right = None
+        self.left = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        # 루트가 없으면
+        if not self.root:
+            self.root = Node(key)
+
+        else:
+            curr = self.root
+            while True:
+                # key가 root보다 작으면 왼쪽에 삽입
+                if curr.val > key:
+                    if not curr.left :
+                        curr.left = Node(key)
+                        break
+                    else:
+                        curr = curr.left
+                else :
+                    if not curr.right:
+                        curr.right = Node(key)
+                        break
+                    else:
+                        curr = curr.right
+
+
+    def search(self, key):
+        curr = self.root
+
+        while curr and curr.val != key:
+            if curr.val > key :
+                curr = curr.left
+            else :
+                curr = curr.right
+
+        return curr
+
+
+
+def solution(lst=lst, search_lst=search_lst):
+    bst = BST()
+    for key in lst:
+        bst.insert(key)
+    ans = []
+    for key in search_lst:
+        if bst.search(key):
+            ans.append(True)
+        else:
+            ans.append(False)
+
+    return ans
+
+print(solution())
